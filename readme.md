@@ -1,5 +1,4 @@
 ### Project 2 : Chia sẻ tài liệu
-### Team Front-end
 1. Team Front-end
     * Quang: Landing Page và navbar
         - Tạo 2 file html lưu dưới định dạng landingpage.blade.php và navbar.blade.php
