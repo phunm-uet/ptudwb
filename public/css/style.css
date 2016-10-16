@@ -1,0 +1,21 @@
+html {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    padding: 70px 0;
+}
+
+.orange-text {
+    color: #fbb450;
+}
+
+.inline {
+    display: inline !important;
+}
+
+/*
+    color: #fbb450; #fde4c1;
+*/
