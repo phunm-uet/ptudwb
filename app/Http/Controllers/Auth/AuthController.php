@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -29,7 +31,10 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-
+    protected $loginView = "frontend.login";
+    protected $registerView = "frontend.register";
+    protected $redirectPath = "/";
+    protected $username = "username";
     /**
      * Create a new authentication controller instance.
      *
@@ -46,13 +51,33 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+        $rules = [
+        'name' => 'required|max:255',
+        'username' => 'required|max:30|unique:users',
+        'email' => 'required|email|max:255|unique:users',
+        'password' => 'required|min:6|confirmed',
+        'sex' => 'required',
+        
+        ];
+        return Validator::make($data,$rules);
+    }
+
+    protected function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        // dd($validator);
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+        session()->flash('register_success', "Dang ky thanh cong");
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -65,8 +90,11 @@ class AuthController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'sex' => $data['sex'],
         ]);
+        session()->flash('register_success', "Dang ky thanh cong");
     }
 }
