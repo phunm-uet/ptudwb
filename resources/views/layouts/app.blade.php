@@ -55,7 +55,7 @@
                     <li><a href="{{ url('/home') }}">Home</a></li>
                 </ul>
 
-                <!-- Right Side Of Navbar -->
+                {{-- Right Side Of Navbar --}}
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
@@ -76,6 +76,8 @@
             </div>
         </div>
     </nav>
+
+    @include('includes.navbar')
 
     @yield('content')
 
