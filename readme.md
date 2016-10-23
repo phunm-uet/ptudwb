@@ -16,3 +16,20 @@
     * Phạm phú Usercontroller,DocumentController CommentController
     * Minh Phú : LikeController, Authentication
     * Hậu SearchController, CollectionController
+
+3. UI
+* Home khi chưa đăng nhập
+[][https://github.com/phunm-uet/ptudwb/blob/master/screenshot/home.png]
+[https://github.com/phunm-uet/ptudwb/blob/master/screenshot/home.png]: 
+
+* Login 
+![][https://github.com/phunm-uet/ptudwb/blob/master/screenshot/login.png]
+[https://github.com/phunm-uet/ptudwb/blob/master/screenshot/login.png]:
+
+* Signup
+![][https://github.com/phunm-uet/ptudwb/blob/master/screenshot/signup.png]
+[https://github.com/phunm-uet/ptudwb/blob/master/screenshot/signup.png]: https://github.com/phunm-uet/ptudwb/blob/master/screenshot/signup.png
+
+* After login
+![][https://github.com/phunm-uet/ptudwb/blob/master/screenshot/home2.png]
+[https://github.com/phunm-uet/ptudwb/blob/master/screenshot/home2.png]: https://github.com/phunm-uet/ptudwb/blob/master/screenshot/home2.png
