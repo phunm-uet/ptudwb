@@ -1,0 +1,18 @@
+html,body{
+	width: 100%;
+	height: 100%;
+}
+
+.logo{
+	display: block;
+	 margin-left: auto;
+	 margin-right: auto;
+}
+
+.form-login{
+	padding-top: 20px;
+}
+
+.navbar {
+	margin-bottom: 0px;
+}
