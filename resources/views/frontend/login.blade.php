@@ -7,13 +7,22 @@
 <div class="container">
 	<div class="col-xs-4 col-xs-offset-4 form-login well">
 		<img class="img-circle logo" src="http://icons.veryicon.com/ico/System/Plump/Document%20write.ico" style="width: 20%;height: 20%;"></img>
-		<form action="" method="POST" role="form">
+
+		<form action="login" method="POST" role="form" id="login-form">
 			<legend class="text-center">Sign in</legend>
 			{{ csrf_field() }}
 			@if (Session::has("register_success"))
-					<div class="alert" role="alert">
-					<strong>Well done!</strong> Dang ky tai khoan thanh cong. Vui long xac nhan email <br>
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<strong>Well done!</strong> {{ Session::get("register_success") }} <br>
 					</div>			
+			@endif
+			@if($errors->has('username'))
+					<div class="alert alert-danger">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						{{ $errors->first('username') }} <br>
+					</div>					
+				
 			@endif
 			<div class="form-group">
 				<label for="username">Username</label>
@@ -24,7 +33,7 @@
 			</div>
 			{{-- End of Username Input --}}
 			<div class="form-group">
-				<label for="username">Password</label>
+				<label for="password">Password</label>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></div>
 					<input type="password" class="form-control" id="password" placeholder="Password" name="password">
@@ -39,6 +48,7 @@
 			<button type="submit" class="btn btn-primary btn-block" style="margin-top: 20px;padding-bottom: 10px" id="login">
 			<i class="fa fa-spinner fa-spin fa-fw" style="display: none"></i>   Login</button>
 		</form>
+
 		<div class="forget col-xs-6 left" style="padding-top: 20px;">
 			<a href="{{ url('/register') }}" title="Forget Password">Register</a>
 		</div>
@@ -50,7 +60,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('public/js/additional-methods.min.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ asset('public/js/additional-methods.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ asset('public/js/jquery.validate.min.js') }}"></script>
     <script src=" {{ asset('public/js/loginvalidate.js') }}"></script>
 

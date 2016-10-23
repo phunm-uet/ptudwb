@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Document;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -12,10 +14,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -24,6 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $documents = new Document();
+        $documents = $documents->paginate(10);
+        // $documents = $documents->all();
+        // dd($documents->user);
+        return view('home')->with(['documents' => $documents]);
     }
 }

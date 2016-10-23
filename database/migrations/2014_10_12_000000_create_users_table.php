@@ -19,7 +19,10 @@ class CreateUsersTable extends Migration
             $table->string("username")->unique();
             $table->string('password');
             $table->string('avatar');
-            $table->boolean("is_admin");
+            $table->boolean("admin")->default(0);
+            $table->boolean("sex")->default(0);
+            $table->boolean("active")->default(0);
+            $table->string("active_code",20);
             $table->integer("liked")->default(0);
             $table->rememberToken();
             $table->timestamps();
@@ -33,6 +36,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('users');
     }
 }

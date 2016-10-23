@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/','HomeController@index');
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get("/timeline",function(){
+	return view("frontend.profile");
+});
+
+Route::get("/home2",function(){
+	return view("home2");
+});

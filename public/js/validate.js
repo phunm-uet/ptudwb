@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
 	$.validator.setDefaults({
     highlight: function(element) {
         $(element).closest('.form-group').addClass('has-error');
@@ -12,7 +14,7 @@ $(document).ready(function() {
         if(element.parent('.input-group').length) {
             error.insertAfter(element.parent());
         } else {
-            error.insertBefore(element);
+            error.insertAfter(element);
         }
     }
 });
@@ -21,7 +23,7 @@ $(document).ready(function() {
 		return /^[a-z0-9](\.?[a-z0-9]){2,}@vnu\.edu.vn$/i.test(value);
 	},"Phai nhap email vnu");
 
-	$("form").validate({
+	$("#register-form").validate({
 		rules: {
 			name : {
 				required : true,
