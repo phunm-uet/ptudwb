@@ -1,0 +1,15 @@
+form.navbar-form.navbar-left{
+    margin-left: 15%;
+}
+.navbar-static-top {
+	background-color: white;
+}
+#search {
+    width: 400px;
+}
+
+
+.navbar-collapse>ul {
+    margin-bottom: 0px;
+}
+

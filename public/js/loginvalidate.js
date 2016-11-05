@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	$.validator.setDefaults({
     highlight: function(element) {
         $(element).closest('.form-group').addClass('has-error');
@@ -19,8 +20,7 @@ $(document).ready(function() {
         }
     }
 });
-	
-	$("form").validate({
+	$("#login-form").validate({
 		rules: {
 			username : {
 				required : true,

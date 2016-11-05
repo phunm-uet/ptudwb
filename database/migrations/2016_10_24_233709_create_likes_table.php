@@ -14,7 +14,10 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->increments('id');
-            // $table->string('id',20);
+            $table->integer("user_id")->unsigned();
+            $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');;
+            $table->integer("doc_id")->unsigned();
+            $table->foreign("doc_id")->references("id")->on("documents");
             $table->timestamps();
         });
     }
@@ -27,5 +30,6 @@ class CreateLikesTable extends Migration
     public function down()
     {
         Schema::drop('likes');
+        
     }
 }

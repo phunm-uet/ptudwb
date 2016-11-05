@@ -5,14 +5,16 @@
 @stop
 @section('content')
 <div class="container">
+
     <div class="col-xs-4 col-xs-offset-4 register-login well">
         <img class="img-circle logo" src="http://icons.veryicon.com/ico/System/Plump/Document%20write.ico" style="width: 20%;height: 20%;"></img>
-        <form action="" method="POST" role="form" name="register">
+        <form action="" method="POST" role="form" name="register" id="register-form">
             <div id="errors">
                 @if (count($errors) > 0)
                 <div class="alert alert-danger" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     @foreach ($errors->all() as $error)
-                        <span class="sr-only">Error:</span>
+                        {{-- <span class="sr-only">Error:</span> --}}
                         <li>{{$error}}</li>
                     @endforeach
                 </div>
@@ -47,8 +49,8 @@
             {{-- End of Email --}}
             <label>Gioi tinh</label><br>
                 
-                  <label class="radio-inline"><input type="radio" name="sex" value="0" >Nam</label>
-                  <label class="radio-inline"><input type="radio" name="sex value="1" >Nu</label>
+                  <label class="radio-inline"><input type="radio" name="sex" value="0" checked="true">Nam</label>
+                  <label class="radio-inline"><input type="radio" name="sex" value="1" >Nu</label>
             <div class="form-group">
                 <label for="username">Password</label>
                 <div class="input-group">

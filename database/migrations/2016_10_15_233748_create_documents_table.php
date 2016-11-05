@@ -13,13 +13,15 @@ class CreateDocumentsTable extends Migration
     public function up()
     {
         Schema::create('documents', function (Blueprint $table) {
-            $table->increments('id',6);
+            $table->increments('id');
             $table->string('title');
             $table->text('description');
             $table->string("path");
             $table->integer('user_id')->unsigned();
-            $table->foreign("user_id")->references("id")->on("users");
-            $table->integer("count_like");
+            $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');;
+            $table->integer("collection_id")->unsigned();
+            $table->foreign("collection_id")->references("id")->on("collections")->onDelete('cascade');;
+            $table->integer("count_like")->default(0);
             $table->timestamps();
         });
     }

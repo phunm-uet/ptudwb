@@ -11,10 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/','HomeController@index');
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get("/timeline",function(){
+	return view("frontend.profile");
+});
+
+Route::get("/home2",function(){
+	return view("home2");
+});
+
+Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
+	Route::get("/admin",function(){
+		return view("admin.dashboard");
+	});
+	Route::get("admin/members",['as' => 'members','uses' => "MemberController@showMembers"]);
+	Route::get("admin/categorys",['as' => 'categorys','uses' => "CategoryController@showCategory"]);
+	Route::post("admin/delete-user",['uses'=>"MemberController@delete",'as'=>"delete-user"]);
+	Route::post("admin/active-user",['uses'=>"MemberController@active",'as'=>"active-user"]);
+	Route::post("admin/admin-user",['uses'=>"MemberController@setAdmin",'as'=>"admin-user"]);
+});
+
+Route::post("like",["uses" => "LikeController@like","middleware" => "auth"]);  

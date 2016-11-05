@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
+use App\Document;
+use App\User;
+use App\Collection;
 class HomeController extends Controller
 {
     /**
@@ -12,18 +14,22 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
-     * Show the application dashboard.
-     *
+     * Show the application index.
+     * Show all Document on database
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('home');
+        $documents = new Document();
+        $collections = Collection::all();
+        $documents = $documents->paginate(10);
+        return view('home')->with(['documents' => $documents])->withCollections($collections);
     }
 }
