@@ -10,12 +10,14 @@
     <div class="col-xs-3">
         @include('includes.sidebar')
     </div>
-    <div class="col-xs-8">
+    <div class="col-xs-7">
+    <meta name="_token" content="{!! csrf_token() !!}">
           @if (count($documents))
           @foreach ($documents as $document)
                 <div class="col-xs-12 card">
                     <div class="card-content">
                       <div class="info row">
+                          <span class="doc_id" hidden="true">{{$document->id}}</span>
                           <div class="col-xs-1">
                               <img src="https://67.media.tumblr.com/938995724f6328457166edc9711ce766/tumblr_nmewe1DK3N1scpx21o1_500.png" alt="baymax" class="img img-circle img-author">
                           </div>
@@ -51,12 +53,20 @@
 
                       {{--  End of article conyent  --}}
                       <div class="row action">
-                        <div class="like col-xs-12">
-                          <a href="#" ><i class="fa fa-heart"></i></a>  69
-                          <a href="#" ><i class="fa fa-comments-o "></i>  96</a>
+                        <div class="col-xs-12">
+                          @if (Auth::check())
+                            @if ($document->likedByMe())
+                               <i class="fa fa-heart like"></i> <span class="num-like">{{ count($document->likes )}}</span> 
+                            @else
+                               <i class="fa fa-heart-o like"></i> <span class="num-like">{{ count($document->likes )}}</span> 
+                            @endif
+                            <a href="#" ><i class="fa fa-comments-o "></i>  {{{ count($document->comments)}}}</a>
+                          @else
+                            {{count($document->likes)}} Lượt thích
+                            <i class="fa fa-comments-o "></i> {{{ count($document->comments)}}}
+                          @endif
                         </div>
                       </div>
-
                       {{-- End of action --}}
                     </div>
                     {{--  End of card content --}}
@@ -71,3 +81,40 @@
 
 </div>
 @endsection
+
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+
+      $(".like").on("click",function(e){
+        // alert("a");
+        $(this).toggleClass("fa-heart-o fa-heart");
+        if($(this).hasClass("fa-heart")){
+          var numLikeEle = $(this).parents(".action").find(".num-like");
+          var numLike = $(numLikeEle).text();
+          numLike = parseInt(numLike) + 1;
+          $(numLikeEle).text(numLike);
+        } else{
+          var numLikeEle = $(this).parents(".action").find(".num-like");
+          var numLike = $(numLikeEle).text();
+          numLike = parseInt(numLike) - 1;
+          $(numLikeEle).text(numLike);
+        }
+        var doc_id = $(this).parents(".card").find(".doc_id").text();
+        $.post("like",{
+          doc_id : doc_id,
+        },function(data){
+
+        }) 
+        return false;
+
+      })
+
+    });
+  </script>
+@stop

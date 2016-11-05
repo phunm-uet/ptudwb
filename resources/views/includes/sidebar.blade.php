@@ -5,24 +5,13 @@
     <div class="panel-body">
         <table class="table">
         <tbody>
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  CNTT</a></td>
-            </tr>
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  Điện tử viễn thông</td>
-            </tr>
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  Vật lỹ kĩ thuật</td>
-            </tr>  
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  Hệ thống thông tin</td>
-            </tr> 
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  Truyền thông máy tính</td>
-            </tr>
-            <tr>
-                <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  Các môn chung</td>
-            </tr>                                                                
+        @if (count($collections))
+            @foreach ($collections as $collection)
+                <tr>
+                    <td><i class="fa fa-graduation-cap" aria-hidden="true"></i><a href="#" title="">  {{$collection->name}}</a></td>
+                </tr>                
+            @endforeach
+        @endif                                                               
         </tbody>
         </table>    
     </div>

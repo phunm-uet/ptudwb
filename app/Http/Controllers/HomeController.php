@@ -6,7 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Document;
 use App\User;
-
+use App\Collection;
 class HomeController extends Controller
 {
     /**
@@ -20,16 +20,16 @@ class HomeController extends Controller
     // }
 
     /**
-     * Show the application dashboard.
-     *
+     * Show the application index.
+     * Show all Document on database
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $documents = new Document();
+        $collections = Collection::all();
         $documents = $documents->paginate(10);
-        // $documents = $documents->all();
-        // dd($documents->user);
-        return view('home')->with(['documents' => $documents]);
+        return view('home')->with(['documents' => $documents])->withCollections($collections);
     }
 }
