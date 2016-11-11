@@ -15,7 +15,7 @@
 @stop
 @section('content')
 	
-	<ol class="breadcrumb" style="margin-left: -50px">
+	<ol class="breadcrumb" style="margin-top: -20px">
 	    <li><a href="#">Home</a></li>
 	    <li><a href="#">Dashboard</a></li>
 	    <li class="active">Categorys</li>
@@ -38,7 +38,8 @@
 				@foreach ($categorys as $category)
 					<tr>
 						<td>
-							<a href="{{ Request::root()."/users/".$category->id }}" target="_blank" class="category_name">
+							<span class="col_id" hidden="true">{{ $category->id }}</span>
+							<a href="{{ Request::root()."/collection/".$category->id }}" target="_blank" class="category_name">
 								{{$category->name}}								
 							</a>
 
@@ -65,8 +66,12 @@
   				<p> Do you want delete <span class="category-name"></span></p>
   			</div>
   			<div class="modal-footer">
-  				<button type="button" class="btn btn-danger btn-delete"><i class="fa fa-check"></i>  Delete</button>
-   				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
+  				<form action="{{ route('delete-categorys') }}" method="POST">
+  					{{ csrf_field() }}
+  					<input type="hidden" name="id_collection" id="id_collection_del">
+	 				<button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-check"></i>  Delete</button>
+	   				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
+  				</form>
   			</div>
   		</div>
   	</div>
@@ -82,14 +87,18 @@
   			</div>
   			<div class="modal-body">
 				<div class="row">
+				<form action="{{ route('edit-categorys') }}" method="POST">
+					{{ csrf_field() }}
+					<input type="hidden" name="id_collection" id="id_collection_edit">
 					<div class="col-xs-6 col-xs-offset-3">
-	  				<div class="form-group">
-	  					<input type="text" id="input-category" class="form-control" required="required">
-	  				</div>
-	  				
-					<button type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span>  Save</button>						
-					</div>			
-				</div>
+		  				<div class="form-group">
+		  					<input type="text" id="input-category" class="form-control" required="required" name="name">
+		  				</div>
+						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span>  Save</button>						
+						</div>			
+					</div>					
+				</form>
+
   			</div>
   		</div>
   	</div>
@@ -105,13 +114,17 @@
   			</div>
   			<div class="modal-body">
 				<div class="row">
-					<div class="col-xs-6 col-xs-offset-3">
-	  				<div class="form-group">
-	  					<input type="text" id="input-category" class="form-control" required="required">
-	  				</div>
-	  				
-					<button type="button" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span>Save</button>						
-					</div>			
+					<form action="{{ route('create-categorys') }}" method="POST">
+						{{ csrf_field() }}
+						<div class="col-xs-6 col-xs-offset-3">
+		  				<div class="form-group">
+		  					<input type="text" id="input-category" class="form-control" required="required" name="name">
+		  				</div>
+		  				
+						<button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-plus"></span>Save</button>						
+						</div>						
+					</form>
+			
 				</div>
   			</div>
   		</div>
@@ -131,6 +144,8 @@
 		   	$(".delete-category").on("click",function(e){
 		    	var tr = $(this).parents("tr");
 		    	nameCategory = $(tr).find(".category_name").text();
+		    	var id_collection = $(tr).find(".col_id").text();
+		    	$("#id_collection_del").val(id_collection);
 		    	$(".category-name").text(nameCategory);		   		
 		    	e.preventDefault();
 		    	$("#delete-category").modal();
@@ -141,13 +156,16 @@
 		    	var tr = $(this).parents("tr");
 		    	nameCategory = $(tr).find(".category_name").text();
 		    	nameCategory = nameCategory.trim();
-		    	$("#input-category").val(nameCategory);		   		
+		    	$("#input-category").val(nameCategory);	
+		    	var id_collection = $(tr).find(".col_id").text();
+		    	$("#id_collection_edit").val(id_collection);	   		
 		    	e.preventDefault();
 		    	$("#edit-category").modal();
 		    });
 
 		   	$("#btn-add").on("click",function(e){
 		    	$("#add-category").modal();
+
 		    });		    
 
 		} );

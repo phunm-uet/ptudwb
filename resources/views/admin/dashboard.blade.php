@@ -1,4 +1,7 @@
 @extends('admin.layouts')
+@section('title')
+    Dashboard
+@stop
 @section('style')
     
     <style type="text/css" media="screen">
@@ -25,6 +28,9 @@
         }
     </style>
 @stop
+@section('title')
+    Dashboard
+@stop
 @section('content')
 
         <div id="page-content-wrapper">
@@ -42,7 +48,7 @@
                                            <i class="fa fa-user fa-4x" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge">{{ $num_user }}</div>
                                             <div>Members</div>
                                         </div>
                                     </div>
@@ -66,12 +72,12 @@
                                            <i class="fa fa-file-o fa-4x" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge">{{ $num_doc }}</div>
                                             <div>Documents</div>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="{{ route('documents') }}">
                                     <div class="panel-footer">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -80,7 +86,7 @@
                                 </a>
                             </div>
                         </div>
-                        {{-- End of panel User --}}
+
                         <div class="col-md-3">
                             <div class="panel panel-yellow">
                                 <div class="panel-heading">
@@ -89,12 +95,12 @@
                                            <i class="fa fa-list fa-4x" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge">{{ $num_category }}</div>
                                             <div>Categorys</div>
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#">
+                                <a href="{{ route('categorys') }}">
                                     <div class="panel-footer">
                                         <span class="pull-left">View Details</span>
                                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -113,7 +119,7 @@
                                           <i class="fa fa-comments-o fa-4x" aria-hidden="true"></i>
                                         </div>
                                         <div class="col-xs-9 text-right">
-                                            <div class="huge">12</div>
+                                            <div class="huge">{{ $num_com }}</div>
                                             <div>Comments</div>
                                         </div>
                                     </div>

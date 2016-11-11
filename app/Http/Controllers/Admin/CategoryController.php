@@ -14,4 +14,11 @@ class CategoryController extends Controller
 
     	return view("admin.categorys")->withCategorys($category);
     }
+
+    public function deleteCategory(Request $request){
+    	$id_collection = $request->id_collection;
+    	$collection = Collection::find($id_collection);
+    	$collection->delete();
+    }
+    
 }

@@ -10,3 +10,7 @@
 .img-user-info {
 	padding-left: 0px;
 }
+.badge {
+	background: #2ecc71;
+	float: right;
+}

@@ -18,47 +18,49 @@
 		}
 	</style>
 @stop
-@section('content')
 
-	<ol class="breadcrumb" style="margin-left: -50px">
+@section('title')
+	Documents
+@stop
+@section('content')
+	<meta name="_token" content="{!! csrf_token() !!}">
+	<ol class="breadcrumb" style="margin-top: -20px">
 	    <li><a href="#">Home</a></li>
 	    <li><a href="#">Dashboard</a></li>
 	    <li class="active">Documents</li>
   </ol>
 
-  <div class="row">
+  <div class="container">
   	<div class="col-md-11">
   		<table class="table table-striped table-bordered" id="members">
   			<thead>
   				<tr>
-  					<th>Name</th>
-  					<th>Category</th>
+  					<th><input type="checkbox" name="" value=""></th>
+  					<th>Title</th>
   					<th>Author</th>
+  					<th>Likes</th>
+  					<th>Comments</th>
+  					<th>Active</th>
   				</tr>
   			</thead>
   			<tbody>
-				@foreach ($members as $member)
+				@foreach ($documents as $document)
 					<tr>
+						<td><input type="checkbox" class="document_check" value="{{$document->id}}">
+						<input type="hidden" class="doc_id" value="{{ $document->id }}">
+						</td>
 						<td>
-							<a href="{{ Request::root()."/users/".$member->id }}" target="_blank">
-								<img src="https://67.media.tumblr.com/938995724f6328457166edc9711ce766/tumblr_nmewe1DK3N1scpx21o1_500.png" alt="" class="img-circle avatar">
-								{{$member->name}}								
+							<a href="{{ Request::root()."/document/".$document->id }}" target="_blank">
+							<img src="{{ asset($document->image) }}" style="width: 30px;height: 30px">
+								{{$document->title}}								
 							</a>
 
 						</td>
-						<td>{{$member->email}}</td>
-						<td class="username">{{$member->username}}</td>
-						@if ($member->active == 1)
-							<td>Actived</td>
-						@else
-							<td>Pendding</td>
-						@endif
+						<td class="username">{{$document->user->name}}</td>
+						<td>{{count($document->likes)}}</td>
+						<td>{{count($document->comments)}}</td>
 						<td>
-							@if ($member->active == 0)
-								<button type="" class="btn btn-xs btn-primary active-user"><i class="fa fa-check"></i>Active</button>
-							@endif
-							<button type="" class="btn btn-xs btn-danger delete-user"><i class="fa fa-close"></i>Delete</button>
-							<button type="" class="btn btn-xs btn-warning admin-user"><i class="fa fa-rocket"></i>Set admin</button>
+							<button type="" class="btn btn-xs btn-danger delete-doc"><i class="fa fa-close"></i>Delete</button>
 						</td>
 					</tr>
 				@endforeach
@@ -67,63 +69,28 @@
   	</div>
   </div>
 
-  <div class="modal fade" id="active-user">
+  {{-- Model Delete Document --}}
+  <div class="modal fade" id="delete-doc">
   	<div class="modal-dialog modal-sm">
   		<div class="modal-content">
   			<div class="modal-header">
   				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  				<h4 class="modal-title"><i class="fa fa-question" aria-hidden="true"></i>    Active User</h4>
+  				<h4 class="modal-title"><i class="fa fa-question" aria-hidden="true"></i>    Delete Document</h4>
   			</div>
   			<div class="modal-body">
-  				<p> Do you want active for <span class="user-name"></span></p>
+  				<p> Do you want delete</p>
   			</div>
   			<div class="modal-footer">
-  				<button type="button" class="btn btn-primary btn-active"><i class="fa fa-check"></i>  Active</button>
-   				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
+  				<form action="{{ route('deletedocument') }}" method="POST">
+					{{ csrf_field() }}
+					<input type="hidden" name="doc_id" value="" id="doc_id">
+					<button type="submit" class="btn btn-danger btn-delete"><i class="fa fa-check"></i>  Delete</button>
+   					<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
+  				</form>
   			</div>
   		</div>
   	</div>
   </div>
-  {{-- Model Active User --}}
-
-  <div class="modal fade" id="delete-user">
-  	<div class="modal-dialog modal-sm">
-  		<div class="modal-content">
-  			<div class="modal-header">
-  				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  				<h4 class="modal-title"><i class="fa fa-question" aria-hidden="true"></i>    Delete User</h4>
-  			</div>
-  			<div class="modal-body">
-  				<p> Do you want delete <span class="user-name"></span></p>
-  			</div>
-  			<div class="modal-footer">
-  				<button type="button" class="btn btn-danger btn-delete"><i class="fa fa-check"></i>  Delete</button>
-   				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
-  			</div>
-  		</div>
-  	</div>
-  </div>
-  {{-- Model Delete User --}}
-
-  <div class="modal fade" id="admin-user">
-  	<div class="modal-dialog modal-sm">
-  		<div class="modal-content">
-  			<div class="modal-header">
-  				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  				<h4 class="modal-title"><i class="fa fa-question" aria-hidden="true"></i>    Set Admin</h4>
-  			</div>
-  			<div class="modal-body">
-  				<p> Do you want set <span class="user-name"></span> for Admin </p>
-  			</div>
-  			<div class="modal-footer">
-  				<button type="button" class="btn btn-success btn-admin"><i class="fa fa-check"></i>  Ok</button>
-  				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i>  Close</button>
-  				
-  			</div>
-  		</div>
-  	</div>
-  </div>
-  {{-- Model Set Admin User --}}
 
 @stop
 
@@ -132,34 +99,26 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    $('#members').DataTable();
-		    // Show model active user
-		    $(".active-user").on("click",function(e){
-		    	e.preventDefault();
-		    	var tr = $(this).parents("tr");
-		    	username = $(tr).children(".username").text();
-		    	$(".user-name").text(username);
-		    	$("#active-user").modal();
-		    });
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }})
 
-		    // Show modal delete user
-		   	$(".delete-user").on("click",function(e){
-		    	var tr = $(this).parents("tr");
-		    	username = $(tr).children(".username").text();
-		    	$(".user-name").text(username);		   		
-		    	e.preventDefault();
-		    	$("#delete-user").modal();
-		    });
+		    $('#members').DataTable({
+   				'aoColumnDefs': [{
+        			'bSortable': false,
+        			'aTargets': [ "no-sort",-1] /* 1st one, start by the right */
+    			}]
+			}) ;
 
-		   	// Show modal set admin
-		   	$(".admin-user").on("click",function(e){
+		    // Show modal delete document
+		   	$(".delete-doc").on("click",function(e){
 		    	var tr = $(this).parents("tr");
-		    	username = $(tr).children(".username").text();
-		    	$(".user-name").text(username);		   		
+		    	doc_id = $(tr).find(".doc_id").val();
+		    	$("#doc_id").val(doc_id);		   		
 		    	e.preventDefault();
-		    	$("#admin-user").modal();
-		    });
-
+		    	$("#delete-doc").modal();
+		    });	   				   	
 		} );
 	</script>
 @stop

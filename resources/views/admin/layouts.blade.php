@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>@yield('title')</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -17,6 +17,11 @@
     <!-- Custom CSS -->
     <link href="{{ asset('public/css/simple-sidebar.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-image: url("http://hdwallpaperbackgrounds.net/wp-content/uploads/2016/07/white-background-5.jpg");
+        }
+    </style>
     @yield('style')
 
 </head>

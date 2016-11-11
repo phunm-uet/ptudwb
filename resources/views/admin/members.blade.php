@@ -20,13 +20,13 @@
 @stop
 @section('content')
 	<meta name="_token" content="{!! csrf_token() !!}">
-	<ol class="breadcrumb" style="margin-left: -50px">
+	<ol class="breadcrumb" style="margin-top: -20px">
 	    <li><a href="#">Home</a></li>
 	    <li><a href="#">Dashboard</a></li>
 	    <li class="active">Members</li>
   </ol>
 
-  <div class="row">
+  <div class="container">
   	<div class="col-md-11">
   		<table class="table table-striped table-bordered" id="members">
   			<thead>

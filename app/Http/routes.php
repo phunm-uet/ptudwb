@@ -11,27 +11,53 @@
 |
 */
 
+//---------------------------------- Admin-----------------------------
+
+Route::group(['middleware' => 'admin','prefix'=>'admin'], function(){
+	// Route About Categorys
+	Route::get("categorys",['as' => 'categorys','uses' => "CollectionController@showCategory"]);
+	Route::post('createcategorys', ['as' => 'create-categorys','uses' => "CollectionController@create"]);
+	Route::post('editcategorys', ['as' => 'edit-categorys','uses' => "CollectionController@edit"]);
+	Route::post('deletecategorys', ['as' => 'delete-categorys','uses' => "CollectionController@delete"]);
+
+	// Route Members
+	Route::group(['namespace' => "Admin"], function(){
+		Route::get("/",["uses" => "DashboardController@index", "as" => "dashboard"]);
+		Route::get("members",['as' => 'members','uses' => "MemberController@showMembers"]);
+		Route::post("delete-user",['uses'=>"MemberController@delete",'as'=>"delete-user"]);
+		Route::post("active-user",['uses'=>"MemberController@active",'as'=>"active-user"]);
+		Route::post("admin-user",['uses'=>"MemberController@setAdmin",'as'=>"admin-user"]);
+	});
+
+	// Document
+
+	Route::get('documents',['uses' => "DocumentController@show",'as' => "documents"]);
+
+});
+
+
+
+Route::group(['middleware' => "auth"],function(){
+	Route::post("like",["uses" => "LikeController@like","middleware" => "auth"]);
+	Route::post('updatedocument', 'DocumentController@updateDocument');
+	Route::post('deletedocument', ['uses' => 'DocumentController@deleteDocument','as' => 'deletedocument']);
+	Route::post('comment', 'CommentController@postCommentDocument');
+	Route::post('updateprofile', 'UserController@updateProfile');
+	Route::get('editprofile', 'UserController@editProfile');
+	Route::get('upload', 'UploadController@getUpload');
+	Route::post('upload', 'UploadController@postUpload');
+});
+
+
 Route::get('/','HomeController@index');
 
 Route::auth();
 
-Route::get("/timeline",function(){
-	return view("frontend.profile");
-});
+Route::get('collection/{id}', 'CollectionController@showByID');
+Route::get('document/{id?}', 'DocumentController@index');
+Route::get("profile/{id}","UserController@showprofile");
+Route::get('search', ["as" => "search","uses" => "DocumentController@search"]);
 
-Route::get("/home2",function(){
-	return view("home2");
-});
 
-Route::group(['namespace' => 'Admin','middleware' => 'admin'], function(){
-	Route::get("/admin",function(){
-		return view("admin.dashboard");
-	});
-	Route::get("admin/members",['as' => 'members','uses' => "MemberController@showMembers"]);
-	Route::get("admin/categorys",['as' => 'categorys','uses' => "CategoryController@showCategory"]);
-	Route::post("admin/delete-user",['uses'=>"MemberController@delete",'as'=>"delete-user"]);
-	Route::post("admin/active-user",['uses'=>"MemberController@active",'as'=>"active-user"]);
-	Route::post("admin/admin-user",['uses'=>"MemberController@setAdmin",'as'=>"admin-user"]);
-});
 
-Route::post("like",["uses" => "LikeController@like","middleware" => "auth"]);  
+Route::get("/test","LikeController@getMax");

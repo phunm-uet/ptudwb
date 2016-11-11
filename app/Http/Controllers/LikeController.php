@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Like;
 use App\Http\Requests;
-
+use DB;
+use App\Document;
 
 class LikeController extends Controller
 {
+    
     public function like(Request $request){
     	$user_id = Auth::id();
     	$doc_id = $request->doc_id;
@@ -22,5 +24,17 @@ class LikeController extends Controller
     		$like->doc_id = $doc_id;
     		$like->save();
     	}
+        return Like::where("doc_id",$doc_id)->count();
+    }
+
+    public function getMax()
+    {
+        $likes = Like::groupBy('doc_id')->select('doc_id', DB::raw('count(*) as total'))->orderBy('total',"DESC")->take(3)->get();
+        $i = 0;
+        foreach ($likes as $like) {
+            $document = Document::where("id",$like->doc_id)->first();
+            $doc_trend[$i] = $document->title;
+            $i++;
+        }
     }
 }
