@@ -93,7 +93,7 @@ class AuthController extends Controller
         Auth::guard($this->getGuard());
         $this->create($request->all());
         session()->flash('register_success', "Đăng ký thành công. Vui lòng xác nhận email");
-        return redirect($this->redirectPath());
+        return redirect($this->x());
     }
 
     /**
