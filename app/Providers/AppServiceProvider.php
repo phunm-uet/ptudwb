@@ -22,10 +22,15 @@ class AppServiceProvider extends ServiceProvider
 
         $like_trends = Like::groupBy('doc_id')->select('doc_id', DB::raw('count(*) as total'))->orderBy('total',"DESC")->take(3)->get();
         $i = 0;
-        foreach ($like_trends as $like) {
-            $doc_trend[$i] = Document::where("id",$like->doc_id)->first();
-            $i++;
-        } 
+        if(count($like_trends) ==0 ){
+            $doc_trend = null;
+        }{
+            foreach ($like_trends as $like) {
+                $doc_trend[$i] = Document::where("id",$like->doc_id)->first();
+                $i++;
+            }             
+        }
+
         view()->share('like_trends', $like_trends);
         view()->share('doc_trend',$doc_trend);       
     }

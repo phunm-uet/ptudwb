@@ -10,7 +10,8 @@ use App\Collection;
 use App\Document;
 use Auth;
 use DB;
-
+use Storage;
+use File;
 class DocumentController extends Controller
 {
     // Show Docuent by ID
@@ -41,6 +42,11 @@ class DocumentController extends Controller
         }
 
         if($document){
+            $filename = $document->first()->path;
+
+            File::delete("storage/documents/".$filename);
+            $image = $document->first()->image;
+            File::delete($image);
             $document->delete();
             session()->flash('delete_success', "1");
             return redirect()->to("/");

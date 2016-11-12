@@ -39,7 +39,7 @@ class UserController extends Controller
         if($request->avatar){
 
             $file = $request->avatar;
-            $filename = $file->getClientOriginalName();
+            $filename = Auth::user()->id.".jpg";
             $file->move(base_path().'/storage/avatar',$filename);
             $avatar_new = $filename;
             $user['avatar'] = $avatar_new;
